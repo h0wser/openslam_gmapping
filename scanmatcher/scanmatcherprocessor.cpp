@@ -132,6 +132,11 @@ void ScanMatcherProcessor::processScan(const RangeReading & reading){
 */
 	double * plainReading = new double[m_beams];
 	reading.rawView(plainReading, m_map.getDelta());
+
+	// Here we can change the file to add our own mapping
+	// Save all feature points back into the plainReading array
+	// Now Gmapping continues to work but using less landmarks
+	// Build new folder for our feature extraction
 	
 	
 #ifdef SCANMATHCERPROCESSOR_DEBUG

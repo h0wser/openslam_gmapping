@@ -137,6 +137,13 @@ target_link_libraries(gfs2neff gridfastslam)
 target_link_libraries(gridfastslam
   scanmatcher log sensor_range sensor_odometry sensor_base utils)
 
+# feature_extraction/
+
+add_library(feature_extraction
+	feature_extraction/feature_extractor.cpp
+	feature_extraction/fe_corner.cpp
+	)
+
 #############
 ## Install ##
 #############
