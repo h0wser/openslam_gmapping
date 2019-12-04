@@ -8,7 +8,8 @@ class FeatureExtractor {
 
 		virtual ~FeatureExtractor();
 
-		virtual unsigned int extract_features(double* readings, unsigned int size) = 0;
+		/* Delta theta is the angle between each beam in readings */
+		virtual unsigned int extract_features(double* readings, double delta_theta, unsigned int size) = 0;
 };
 
 #endif // FEATURE_EXTRACTOR_H

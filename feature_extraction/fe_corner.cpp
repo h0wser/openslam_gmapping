@@ -9,6 +9,6 @@ FE_Corner::~FE_Corner() {
 
 }
 
-unsigned int extract_features(double* readings, unsigned int size) {
+unsigned int extract_features(double* readings, double delta_theta, unsigned int size) {
 	printf("Extracting corners");
 }

@@ -8,7 +8,7 @@ class FE_Corner : FeatureExtractor {
 		FE_Corner();
 		virtual ~FE_Corner();
 
-		virtual unsigned int extract_features(double* readings, unsigned int size);
+		virtual unsigned int extract_features(double* readings, double delta_theta, unsigned int size);
 };
 
 #endif // FE_CORNER_H
