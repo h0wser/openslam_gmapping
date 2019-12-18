@@ -11,4 +11,6 @@ FeatureExtractor::~FeatureExtractor()
 {
 }
 
-
+void FeatureExtractor::remove_from_scan(double* readings, int i) {
+	*(readings+i) = FP_NAN;
+}

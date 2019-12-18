@@ -51,7 +51,6 @@ double * FE_Corner::extract_features(double* plainReading, unsigned int m_beams)
 	delete [] angleArray;
 	delete [] m_xCartesian;
 	delete [] m_yCartesian;
-	printf("Extracting corners");
 	return plainReading;
 }
 
