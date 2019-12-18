@@ -1,6 +1,7 @@
 #include <iostream>
 #include "gmapping/scanmatcher/scanmatcherprocessor.h"
 #include "gmapping/scanmatcher/eig3.h"
+#include "gmapping/feature_extraction/fe_line_segment.h"
 
 //#define SCANMATHCERPROCESSOR_DEBUG
 namespace GMapping {
@@ -137,7 +138,9 @@ void ScanMatcherProcessor::processScan(const RangeReading & reading){
 	// Save all feature points back into the plainReading array
 	// Now Gmapping continues to work but using less landmarks
 	// Build new folder for our feature extraction
+	//
 	
+	m_line_segment_extractor.extract_features(plainReading, 0, m_beams);
 	
 #ifdef SCANMATHCERPROCESSOR_DEBUG
 	cout << endl;

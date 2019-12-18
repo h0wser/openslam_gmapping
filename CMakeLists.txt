@@ -113,7 +113,7 @@ add_executable(icptest
 target_link_libraries(scanmatch_test scanmatcher)
 target_link_libraries(icptest scanmatcher)
 target_link_libraries(scanmatcher
-  log sensor_range sensor_odometry sensor_base utils)
+  log sensor_range sensor_odometry sensor_base utils feature_extraction)
 
 # gridfastslam/
 # CPPFLAGS+=-I../sensor
@@ -140,8 +140,10 @@ target_link_libraries(gridfastslam
 # feature_extraction/
 
 add_library(feature_extraction
+	feature_extraction/fe_line_segment.cpp
 	feature_extraction/feature_extractor.cpp
 	feature_extraction/fe_corner.cpp
+	feature_extraction/line_feature.cpp
 	)
 
 #############
