@@ -8,7 +8,11 @@ class FE_Corner : FeatureExtractor {
 		FE_Corner();
 		virtual ~FE_Corner();
 
-		virtual unsigned int extract_features(double* readings, double delta_theta, unsigned int size);
+		static void polarToCartesian(unsigned int m_beam, double* plainReading,double* angleArray,double * m_xCartesian,double * m_yCartesian);
+
+		static int cornerCheck(double* m_xCartesian, double* m_yCartesian,unsigned int i);
+
+		virtual double * extract_features(double* plainReading, unsigned int m_beams);
 };
 
 #endif // FE_CORNER_H

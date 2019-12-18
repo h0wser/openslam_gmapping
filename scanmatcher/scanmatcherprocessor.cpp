@@ -2,6 +2,9 @@
 #include "gmapping/scanmatcher/scanmatcherprocessor.h"
 #include "gmapping/scanmatcher/eig3.h"
 #include "gmapping/feature_extraction/fe_line_segment.h"
+#include "gmapping/feature_extraction/feature_extractor.h"
+#include "gmapping/feature_extraction/fe_corner.h"
+#include "laser_line_extraction/line_extraction_ros.h"
 
 //#define SCANMATHCERPROCESSOR_DEBUG
 namespace GMapping {
@@ -133,6 +136,11 @@ void ScanMatcherProcessor::processScan(const RangeReading & reading){
 */
 	double * plainReading = new double[m_beams];
 	reading.rawView(plainReading, m_map.getDelta());
+	line_extraction::LineExtractionROS laserScanCallback_=line_extraction::LineExtractionROS();
+	plainReading=laserScanCallback_.laserScanCallback(plainReading,m_beams);
+	//FE_Corner featureExtract=FE_Corner();
+	//plainReading=featureExtract.extract_features(plainReading,m_beams);
+	
 
 	// Here we can change the file to add our own mapping
 	// Save all feature points back into the plainReading array
@@ -140,7 +148,7 @@ void ScanMatcherProcessor::processScan(const RangeReading & reading){
 	// Build new folder for our feature extraction
 	//
 	
-	m_line_segment_extractor.extract_features(plainReading, 0, m_beams);
+	//m_line_segment_extractor.extract_features(plainReading, 0, m_beams);
 	
 #ifdef SCANMATHCERPROCESSOR_DEBUG
 	cout << endl;

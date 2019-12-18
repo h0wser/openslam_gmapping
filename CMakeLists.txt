@@ -3,6 +3,7 @@ project(openslam_gmapping)
 
 ## Find catkin macros and libraries
 find_package(catkin REQUIRED)
+find_package(Eigen3 REQUIRED)
 
 ###################################
 ## catkin specific configuration ##
@@ -20,6 +21,7 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
+include_directories(include ${EIGEN3_INCLUDE_DIRS})
 include_directories(include)
 
 #SUBDIRS=utils sensor log configfile scanmatcher gridfastslam gui
@@ -137,15 +139,31 @@ target_link_libraries(gfs2neff gridfastslam)
 target_link_libraries(gridfastslam
   scanmatcher log sensor_range sensor_odometry sensor_base utils)
 
+
+
+  add_library(line feature_extraction/line.cpp)
+  target_link_libraries(line ${catkin_LIBRARIES})
+  
+  add_library(line_extraction feature_extraction/line_extraction.cpp)
+  target_link_libraries(line_extraction ${catkin_LIBRARIES})
+  
+  add_library(line_extraction_ros feature_extraction/line_extraction_ros.cpp)
+  target_link_libraries(line_extraction_ros line line_extraction ${catkin_LIBRARIES})
+  add_dependencies(line_extraction_ros laser_line_extraction_generate_messages_cpp)
+
 # feature_extraction/
 
 add_library(feature_extraction
 	feature_extraction/fe_line_segment.cpp
 	feature_extraction/feature_extractor.cpp
-	feature_extraction/fe_corner.cpp
 	feature_extraction/line_feature.cpp
-	)
+	feature_extraction/fe_corner.cpp
+	feature_extraction/line_extraction_ros.cpp
+	feature_extraction/line_extraction.cpp
+	feature_extraction/line.cpp
+  )
 
+  
 #############
 ## Install ##
 #############
@@ -161,7 +179,7 @@ add_library(feature_extraction
 # )
 
 ## Mark executables and/or libraries for installation
-install(TARGETS utils autoptr_test sensor_base sensor_odometry sensor_range sensor_range log log_test log_plot scanstudio2carmen rdk2carmen configfile configfile_test scanmatcher scanmatch_test icptest gridfastslam gfs2log gfs2rec gfs2neff
+install(TARGETS utils autoptr_test sensor_base sensor_odometry sensor_range sensor_range log log_test log_plot scanstudio2carmen rdk2carmen configfile configfile_test scanmatcher scanmatch_test icptest gridfastslam gfs2log gfs2rec gfs2neff line_extraction_ros line_extraction line
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
