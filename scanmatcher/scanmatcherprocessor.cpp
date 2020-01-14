@@ -137,20 +137,24 @@ void ScanMatcherProcessor::processScan(const RangeReading & reading){
 */
 	double * plainReading = new double[m_beams];
 	reading.rawView(plainReading, m_map.getDelta());
-	line_extraction::LineExtractionROS laserScanCallback_=line_extraction::LineExtractionROS();
-	plainReading=laserScanCallback_.laserScanCallback(plainReading,m_beams);
-	//FE_Corner featureExtract=FE_Corner();
-	//plainReading=featureExtract.extract_features(plainReading,m_beams);
-	
+
+#ifdef USE_FE_CORNER
+	plainReading = m_corner_extractor.extract_features(plainReading,m_beams);
+#endif
+
+#ifdef USE_FE_SPLIT_MERGE
+	plainReading = m_split_merge_extractor.extract_features(plainReading, m_beams);
+#endif
+
+#ifdef USE_FE_LINE_SEGMENT
+	m_line_segment_extractor.extract_features(plainReading, m_beams);
+#endif
 
 	// Here we can change the file to add our own mapping
 	// Save all feature points back into the plainReading array
 	// Now Gmapping continues to work but using less landmarks
 	// Build new folder for our feature extraction
 	//
-	
-	//m_line_segment_extractor.extract_features(plainReading, 0, m_beams);
-	
 #ifdef SCANMATHCERPROCESSOR_DEBUG
 	cout << endl;
 #endif

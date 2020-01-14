@@ -7,6 +7,8 @@
 //#include <gsl/gsl_eigen.h>
 #include "gmapping/scanmatcher/scanmatcher.h"
 #include "gmapping/feature_extraction/fe_line_segment.h"
+#include "gmapping/feature_extraction/fe_corner.h"
+#include "gmapping/feature_extraction/fe_split_merge.h"
 
 namespace GMapping {
 
@@ -41,7 +43,11 @@ class ScanMatcherProcessor{
 		int  m_count;
 		//gsl_eigen_symmv_workspace * m_eigenspace;
 
+
+		// Feature extractors
+		FE_Corner m_corner_extractor;
 		FE_LineSegment m_line_segment_extractor;
+		FE_SplitMerge m_split_merge_extractor;
 };
 
 };

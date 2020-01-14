@@ -103,6 +103,25 @@ target_link_libraries(configfile_test configfile)
 # OBJS= smmap.o scanmatcher.o scanmatcherprocessor.o eig3.o
 # APPS= scanmatch_test icptest
 # LDFLAGS+= -llog -lsensor_range -lsensor_odometry -lsensor_base -lutils
+
+# Options for enabling different types of feature extraction in scanmatcher
+option(USE_CORNER "Use corner feature extraction" OFF)
+option(USE_SPLIT_MERGE "Use split and merge feature extraction" OFF)
+option(USE_LINE_SEGMENT "Use line segment feature extraction" OFF)
+
+
+if (USE_CORNER)
+	add_definitions(-DUSE_FE_CORNER)
+endif()
+
+if (USE_SPLIT_MERGE)
+	add_definitions(-DUSE_FE_SPLIT_MERGE)
+endif()
+
+if (USE_LINE_SEGMENT)
+	add_definitions(-DUSE_FE_LINE_SEGMENT)
+endif()
+
 add_library(scanmatcher
   scanmatcher/smmap.cpp
   scanmatcher/scanmatcher.cpp
@@ -161,6 +180,7 @@ add_library(feature_extraction
 	feature_extraction/line_extraction_ros.cpp
 	feature_extraction/line_extraction.cpp
 	feature_extraction/line.cpp
+	feature_extraction/fe_split_merge.cpp
   )
 
   
