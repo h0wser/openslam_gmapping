@@ -31,7 +31,7 @@ FE_LineSegment::~FE_LineSegment() {
 
 }
 
-unsigned int FE_LineSegment::extract_features(double *readings, double delta_theta, unsigned int size) {
+double * FE_LineSegment::extract_features(double* readings, unsigned int size) {
 	std::vector<double> scanData(readings, readings+size);
 
 	std::vector<line> lines = std::vector<line>();

@@ -9,7 +9,7 @@ class FE_LineSegment : FeatureExtractor {
 		FE_LineSegment();
 		virtual ~FE_LineSegment();
 
-		virtual unsigned int extract_features(double* readings, double delta_theta, unsigned int size);
+		virtual double * extract_features(double* readings, unsigned int size);
 
 	private:
 		line_feature::LineFeature m_line_feature;

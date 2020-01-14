@@ -8,8 +8,6 @@ class FeatureExtractor {
 	public:
 		FeatureExtractor();
 
-
-
 		virtual ~FeatureExtractor();
 		virtual double * extract_features(double* readings, unsigned int size) = 0;
 	

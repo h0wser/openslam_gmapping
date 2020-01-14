@@ -335,7 +335,7 @@ void LineFeature::cleanline()
 				
 				if((theta_d_<0.1)||(theta_d_>(PI - 0.1)))
 				{
-				    int _left = min(m_line[p].left,m_line[q].left);
+				    int _left = fe_min(m_line[p].left,m_line[q].left);
 				  
 				    least m_temp = leastsquare(_left,m_line[q].right,1);
 				    

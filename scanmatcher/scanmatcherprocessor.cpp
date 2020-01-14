@@ -1,10 +1,11 @@
-#include <iostream>
 #include "gmapping/scanmatcher/scanmatcherprocessor.h"
 #include "gmapping/scanmatcher/eig3.h"
 #include "gmapping/feature_extraction/fe_line_segment.h"
 #include "gmapping/feature_extraction/feature_extractor.h"
 #include "gmapping/feature_extraction/fe_corner.h"
 #include "laser_line_extraction/line_extraction_ros.h"
+
+#include <iostream>
 
 //#define SCANMATHCERPROCESSOR_DEBUG
 namespace GMapping {
