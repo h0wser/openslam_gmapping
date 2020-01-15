@@ -5,6 +5,9 @@
 #include "gmapping/feature_extraction/fe_corner.h"
 #include "laser_line_extraction/line_extraction_ros.h"
 
+#include <ros/ros.h>
+#include <visualization_msgs/Marker.h>
+
 #include <iostream>
 
 //#define SCANMATHCERPROCESSOR_DEBUG
@@ -22,6 +25,7 @@ ScanMatcherProcessor::ScanMatcherProcessor(const ScanMatcherMap& m)
   m_computeCovariance=false;
   //m_eigenspace=gsl_eigen_symmv_alloc(3);
   useICP=false;
+
 }
 
 

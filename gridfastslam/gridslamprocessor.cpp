@@ -414,9 +414,22 @@ void GridSlamProcessor::setMotionModelParameters
                                &(reading[0]),
                                static_cast<const RangeSensor*>(reading.getSensor()),
                                reading.getTime());
+  
 
-      if (m_count>0){
-	scanMatch(plainReading);
+    #ifdef USE_FE_CORNER
+      plainReading = m_corner_extractor.extract_features(plainReading,m_beams);
+    #endif
+
+    #ifdef USE_FE_SPLIT_MERGE
+      plainReading = m_split_merge_extractor.extract_features(plainReading, m_beams);
+    #endif
+
+    #ifdef USE_FE_LINE_SEGMENT
+      m_line_segment_extractor.extract_features(plainReading, m_beams);
+    #endif
+
+  if (m_count>0){
+      scanMatch(plainReading);
 	if (m_outputStream.is_open()){
 	  m_outputStream << "LASER_READING "<< reading.size() << " ";
 	  m_outputStream << setiosflags(ios::fixed) << setprecision(2);

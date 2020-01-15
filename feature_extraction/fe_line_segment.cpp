@@ -2,7 +2,8 @@
 
 #include <stdio.h>
 
-FE_LineSegment::FE_LineSegment() {
+FE_LineSegment::FE_LineSegment() 
+{
 
 	double angle_min = -0.5;
 	double angle_max = 0.5;
@@ -37,4 +38,7 @@ double * FE_LineSegment::extract_features(double* readings, unsigned int size) {
 	std::vector<line> lines = std::vector<line>();
 	std::vector<gline> glines = std::vector<gline>();
 	m_line_feature.extractLines(lines, glines);
+
+
+	// use these lines to change readings so only readings on extracted lines are included
 }

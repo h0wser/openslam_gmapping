@@ -1,6 +1,7 @@
 #include "gmapping/feature_extraction/fe_split_merge.h"
 
-FE_SplitMerge::FE_SplitMerge() {
+FE_SplitMerge::FE_SplitMerge() 
+{
 
 }
 

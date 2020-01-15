@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 2.8.3)
 project(openslam_gmapping)
 
 ## Find catkin macros and libraries
-find_package(catkin REQUIRED)
-find_package(Eigen3 REQUIRED)
+find_package(catkin REQUIRED COMPONENTS roscpp)
+find_package(Eigen3 REQUIRED COMPONENTS)
 
 ###################################
 ## catkin specific configuration ##
@@ -11,8 +11,8 @@ find_package(Eigen3 REQUIRED)
 ## The catkin_package macro generates cmake config files for your package
 ## Declare things to be passed to dependent projects
 catkin_package(
-  INCLUDE_DIRS include
-  LIBRARIES utils sensor_base sensor_odometry sensor_range log configfile scanmatcher gridfastslam
+  INCLUDE_DIRS include ${EIGEN3_INCLUDE_DIRS}
+  LIBRARIES utils sensor_base sensor_odometry sensor_range log configfile scanmatcher feature_extraction gridfastslam 
 )
 
 ###########
@@ -21,7 +21,7 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(include ${EIGEN3_INCLUDE_DIRS})
+include_directories(include ${EIGEN3_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
 include_directories(include)
 
 #SUBDIRS=utils sensor log configfile scanmatcher gridfastslam gui
@@ -156,7 +156,7 @@ target_link_libraries(gfs2log gridfastslam)
 target_link_libraries(gfs2rec gridfastslam)
 target_link_libraries(gfs2neff gridfastslam)
 target_link_libraries(gridfastslam
-  scanmatcher log sensor_range sensor_odometry sensor_base utils)
+  scanmatcher log sensor_range sensor_odometry sensor_base utils feature_extraction)
 
 
 
@@ -182,6 +182,7 @@ add_library(feature_extraction
 	feature_extraction/line.cpp
 	feature_extraction/fe_split_merge.cpp
   )
+target_link_libraries(feature_extraction ${catkin_LIBRARIES})
 
   
 #############

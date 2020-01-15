@@ -14,7 +14,9 @@
 #include <gmapping/sensor/sensor_range/rangereading.h>
 #include <gmapping/scanmatcher/scanmatcher.h>
 #include "gmapping/gridfastslam/motionmodel.h"
-
+#include "gmapping/feature_extraction/fe_corner.h"
+#include "gmapping/feature_extraction/fe_split_merge.h"
+#include "gmapping/feature_extraction/fe_line_segment.h"
 
 namespace GMapping {
 
@@ -305,6 +307,10 @@ namespace GMapping {
     // stream in which to write the messages
     std::ostream& m_infoStream;
     
+		// Feature extractors
+		FE_Corner m_corner_extractor;
+		FE_LineSegment m_line_segment_extractor;
+		FE_SplitMerge m_split_merge_extractor;
     
     // the functions below performs side effect on the internal structure,
     //should be called only inside the processScan method

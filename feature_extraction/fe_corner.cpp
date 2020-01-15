@@ -2,13 +2,17 @@
 #include <stdio.h>
 #include <math.h>
 #include "gmapping/utils/point.h"
+#include <visualization_msgs/Marker.h>
+
+
 using namespace GMapping;
 
 
 const double lowerBound = -0.3436;
 const double upperBound = 0.3515;
 
-FE_Corner::FE_Corner() {
+FE_Corner::FE_Corner() 
+{
 
 }
 
@@ -51,6 +55,40 @@ double * FE_Corner::extract_features(double* plainReading, unsigned int m_beams)
 	delete [] angleArray;
 	delete [] m_xCartesian;
 	delete [] m_yCartesian;
+
+    // Visualization test
+    visualization_msgs::Marker marker;
+
+    marker.header.frame_id = "base_link";
+    marker.header.stamp = ros::Time::now();
+    marker.id = 0;
+    marker.ns = "test_ns";
+    marker.type = visualization_msgs::Marker::CUBE;
+    marker.action = visualization_msgs::Marker::ADD;
+
+    marker.pose.position.x = 0;
+    marker.pose.position.y = 0;
+    marker.pose.position.z = 0;
+    marker.pose.orientation.x = 0.0;
+    marker.pose.orientation.y = 0.0;
+    marker.pose.orientation.z = 0.0;
+    marker.pose.orientation.w = 1.0;
+
+    marker.scale.x = 1.0;
+    marker.scale.y = 1.0;
+    marker.scale.z = 1.0;
+
+    marker.color.r = 1.0;
+    marker.color.g = 0.5;
+    marker.color.b = 0.0;
+    marker.color.a = 1.0;
+
+    marker.lifetime = ros::Duration();
+
+    if (m_marker_publisher.getNumSubscribers() > 0) {
+        m_marker_publisher.publish(marker);
+    }
+
 	return plainReading;
 }
 
