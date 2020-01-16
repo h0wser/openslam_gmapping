@@ -262,6 +262,20 @@ void GridSlamProcessor::setMotionModelParameters
       angles[i]=rangeSensor->beams()[i].pose.theta;
     }
     m_matcher.setLaserParameters(m_beams, angles, rangeSensor->getPose());
+
+    // Setup angles for feature extractors
+    m_corner_extractor.set_min_angle(angles[0]);
+    m_corner_extractor.set_max_angle(angles[m_beams-1]);
+    m_corner_extractor.set_angle_res(fabs(rangeSensor->beams()[0].pose.theta-rangeSensor->beams()[1].pose.theta));
+
+    m_split_merge_extractor.set_min_angle(angles[0]);
+    m_split_merge_extractor.set_max_angle(angles[m_beams-1]);
+    m_split_merge_extractor.set_angle_res(fabs(rangeSensor->beams()[0].pose.theta-rangeSensor->beams()[1].pose.theta));
+
+    m_line_segment_extractor.set_min_angle(angles[0]);
+    m_line_segment_extractor.set_max_angle(angles[m_beams-1]);
+    m_line_segment_extractor.set_angle_res(fabs(rangeSensor->beams()[0].pose.theta-rangeSensor->beams()[1].pose.theta));
+     
     delete [] angles;
   }
   
@@ -400,12 +414,13 @@ void GridSlamProcessor::setMotionModelParameters
       cerr << "Laser Pose= " << reading.getPose().x << " " << reading.getPose().y 
 	   << " " << reading.getPose().theta << endl;
       
+      cerr << "Feature extraction TEST > r=" << m_corner_extractor.get_angle_res() << ", max=" << m_corner_extractor.get_max_angle() << ", min=" << m_corner_extractor.get_min_angle() << endl;
       
       //this is for converting the reading in a scan-matcher feedable form
       assert(reading.size()==m_beams);
       double * plainReading = new double[m_beams];
       for(unsigned int i=0; i<m_beams; i++){
-	plainReading[i]=reading[i];
+	      plainReading[i]=reading[i];
       }
       m_infoStream << "m_count " << m_count << endl;
 
@@ -415,6 +430,7 @@ void GridSlamProcessor::setMotionModelParameters
                                static_cast<const RangeSensor*>(reading.getSensor()),
                                reading.getTime());
   
+    // Set angle parameters by here
 
     #ifdef USE_FE_CORNER
       plainReading = m_corner_extractor.extract_features(plainReading,m_beams);

@@ -3,7 +3,7 @@
 
 #include "gmapping/feature_extraction/feature_extractor.h"
 
-class FE_Corner : FeatureExtractor {
+class FE_Corner : public FeatureExtractor {
 	public:
 		FE_Corner();
 		virtual ~FE_Corner();

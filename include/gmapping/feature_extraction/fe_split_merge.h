@@ -4,7 +4,7 @@
 #include "gmapping/feature_extraction/feature_extractor.h"
 #include "laser_line_extraction/line_extraction_ros.h"
 
-class FE_SplitMerge : FeatureExtractor {
+class FE_SplitMerge : public FeatureExtractor {
 	public:
 		FE_SplitMerge();
 		virtual ~FE_SplitMerge();

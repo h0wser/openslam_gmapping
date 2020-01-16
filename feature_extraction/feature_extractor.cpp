@@ -13,6 +13,36 @@ FeatureExtractor::~FeatureExtractor()
 {
 }
 
+void FeatureExtractor::set_min_angle(double m)
+{
+	m_min_angle = m;
+}
+
+void FeatureExtractor::set_max_angle(double m)
+{
+	m_max_angle = m;
+}
+
+void FeatureExtractor::set_angle_res(double r)
+{
+	m_angle_res = r;
+}
+
+double FeatureExtractor::get_min_angle() const
+{
+	return m_min_angle;
+}
+
+double FeatureExtractor::get_max_angle() const
+{
+	return m_max_angle;
+}
+
+double FeatureExtractor::get_angle_res() const
+{
+	return m_angle_res;
+}
+
 void FeatureExtractor::remove_from_scan(double* readings, int i) {
 	*(readings+i) = FP_NAN;
 }
