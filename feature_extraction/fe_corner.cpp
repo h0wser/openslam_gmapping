@@ -27,7 +27,7 @@ double * FE_Corner::extract_features(double* plainReading, unsigned int m_beams)
 	point<double> cornerPos[m_beams];
 
 	for(int i=0;i<m_beams;i++){
-        angleArray[i]=m_min_angle + i * m_angle_res;//(540-i)*0.25;
+        angleArray[i]= m_min_angle + i * m_angle_res; //(540-i)*0.25;
     }
 	FE_Corner::polarToCartesian(m_beams,plainReading,angleArray,m_xCartesian,m_yCartesian);
 

@@ -275,7 +275,7 @@ void GridSlamProcessor::setMotionModelParameters
     m_line_segment_extractor.set_min_angle(angles[0]);
     m_line_segment_extractor.set_max_angle(angles[m_beams-1]);
     m_line_segment_extractor.set_angle_res(fabs(rangeSensor->beams()[0].pose.theta-rangeSensor->beams()[1].pose.theta));
-     
+    m_line_segment_extractor.setupLineFeatures(); 
     delete [] angles;
   }
   

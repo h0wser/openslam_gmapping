@@ -11,6 +11,8 @@ class FE_LineSegment : public FeatureExtractor {
 
 		virtual double * extract_features(double* readings, unsigned int size);
 
+		void setupLineFeatures();
+
 	private:
 		line_feature::LineFeature m_line_feature;
 };

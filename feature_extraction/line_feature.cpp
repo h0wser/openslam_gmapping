@@ -1,5 +1,6 @@
 #include "gmapping/feature_extraction/line_feature.h"
 #include "sys/time.h"
+#include <iostream>
 
 namespace line_feature
 {
