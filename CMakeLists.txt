@@ -105,22 +105,22 @@ target_link_libraries(configfile_test configfile)
 # LDFLAGS+= -llog -lsensor_range -lsensor_odometry -lsensor_base -lutils
 
 # Options for enabling different types of feature extraction in scanmatcher
-option(USE_CORNER "Use corner feature extraction" OFF)
-option(USE_SPLIT_MERGE "Use split and merge feature extraction" OFF)
-option(USE_LINE_SEGMENT "Use line segment feature extraction" OFF)
+option(USE_CORNER "Use corner feature extraction")
+option(USE_SPLIT_MERGE "Use split and merge feature extraction")
+option(USE_LINE_SEGMENT "Use line segment feature extraction")
 
 
 if (USE_CORNER)
 	add_definitions(-DUSE_FE_CORNER)
-endif()
+endif(USE_CORNER)
 
 if (USE_SPLIT_MERGE)
 	add_definitions(-DUSE_FE_SPLIT_MERGE)
-endif()
+endif(USE_SPLIT_MERGE)
 
 if (USE_LINE_SEGMENT)
 	add_definitions(-DUSE_FE_LINE_SEGMENT)
-endif()
+endif(USE_LINE_SEGMENT)
 
 add_library(scanmatcher
   scanmatcher/smmap.cpp

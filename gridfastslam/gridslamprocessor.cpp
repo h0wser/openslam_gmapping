@@ -414,8 +414,6 @@ void GridSlamProcessor::setMotionModelParameters
       cerr << "Laser Pose= " << reading.getPose().x << " " << reading.getPose().y 
 	   << " " << reading.getPose().theta << endl;
       
-      cerr << "Feature extraction TEST > r=" << m_corner_extractor.get_angle_res() << ", max=" << m_corner_extractor.get_max_angle() << ", min=" << m_corner_extractor.get_min_angle() << endl;
-      
       //this is for converting the reading in a scan-matcher feedable form
       assert(reading.size()==m_beams);
       double * plainReading = new double[m_beams];
@@ -433,14 +431,17 @@ void GridSlamProcessor::setMotionModelParameters
     // Set angle parameters by here
 
     #ifdef USE_FE_CORNER
+      cerr << "Using FE_CORNER" << endl;
       plainReading = m_corner_extractor.extract_features(plainReading,m_beams);
     #endif
 
     #ifdef USE_FE_SPLIT_MERGE
+      cerr << "Using FE_SPLIT_MERGE" << endl;
       plainReading = m_split_merge_extractor.extract_features(plainReading, m_beams);
     #endif
 
     #ifdef USE_FE_LINE_SEGMENT
+      cerr << "Using FE_LINE_SEGMENT" << endl;
       m_line_segment_extractor.extract_features(plainReading, m_beams);
     #endif
 

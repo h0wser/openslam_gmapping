@@ -27,7 +27,7 @@ double * FE_Corner::extract_features(double* plainReading, unsigned int m_beams)
 	point<double> cornerPos[m_beams];
 
 	for(int i=0;i<m_beams;i++){
-        angleArray[i]=(540-i)*0.25;
+        angleArray[i]=m_min_angle + i * m_angle_res;//(540-i)*0.25;
     }
 	FE_Corner::polarToCartesian(m_beams,plainReading,angleArray,m_xCartesian,m_yCartesian);
 
@@ -46,47 +46,41 @@ double * FE_Corner::extract_features(double* plainReading, unsigned int m_beams)
 		}
 	}
 
+    visualization_msgs::Marker marker_points;
+    marker_points.header.frame_id = "base_link";
+    marker_points.header.stamp = ros::Time::now();
+    marker_points.id = 0;
+    marker_points.ns = "fe_corner";
+    marker_points.type = visualization_msgs::Marker::POINTS;
+    marker_points.action = visualization_msgs::Marker::ADD;
+    marker_points.lifetime = ros::Duration();
+    marker_points.scale.x = 0.2;
+    marker_points.scale.y = 0.2;
+
+    marker_points.color.g = 1.0;
+    marker_points.color.a = 1.0;
+    marker_points.pose.orientation.w = 1.0;
+
 	for (unsigned int i = 0; i < m_beams; i++) {
 		if (cornerPos[i].x != plainReading[i] && cornerPos[i].y != angleArray[i]) {
 			plainReading[i] = FP_NAN;
-		}
+		} else {
+            // add to visualization marker yao
+            geometry_msgs::Point p;
+            p.x = m_xCartesian[i];
+            p.y = m_yCartesian[i];
+            p.z = 0;
+            marker_points.points.push_back(p);
+        }
 	}
 	
 	delete [] angleArray;
 	delete [] m_xCartesian;
 	delete [] m_yCartesian;
 
-    // Visualization test
-    visualization_msgs::Marker marker;
-
-    marker.header.frame_id = "base_link";
-    marker.header.stamp = ros::Time::now();
-    marker.id = 0;
-    marker.ns = "test_ns";
-    marker.type = visualization_msgs::Marker::CUBE;
-    marker.action = visualization_msgs::Marker::ADD;
-
-    marker.pose.position.x = 0;
-    marker.pose.position.y = 0;
-    marker.pose.position.z = 0;
-    marker.pose.orientation.x = 0.0;
-    marker.pose.orientation.y = 0.0;
-    marker.pose.orientation.z = 0.0;
-    marker.pose.orientation.w = 1.0;
-
-    marker.scale.x = 1.0;
-    marker.scale.y = 1.0;
-    marker.scale.z = 1.0;
-
-    marker.color.r = 1.0;
-    marker.color.g = 0.5;
-    marker.color.b = 0.0;
-    marker.color.a = 1.0;
-
-    marker.lifetime = ros::Duration();
 
     if (m_marker_publisher.getNumSubscribers() > 0) {
-        m_marker_publisher.publish(marker);
+        m_marker_publisher.publish(marker_points);
     }
 
 	return plainReading;
