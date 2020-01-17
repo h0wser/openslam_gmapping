@@ -48,6 +48,10 @@ double * FE_LineSegment::extract_features(double* readings, unsigned int size) {
 
 	m_line_feature.setRangeData(scanData);
 	m_line_feature.extractLines(lines, glines);
+	double* newReading = new double[size];
+	for (double* r = newReading; r < newReading + size; r++) {
+		*r = FP_NAN;
+	}
 
 	visualization_msgs::Marker marker_points;
 
@@ -76,11 +80,32 @@ double * FE_LineSegment::extract_features(double* readings, unsigned int size) {
 
 		marker_points.points.push_back(p1);
 		marker_points.points.push_back(p2);
+
+		double h1 = atan2(p1.y, p1.x);
+		double h2 = atan2(p2.y, p2.x);
+
+		double slope = 1.0 * (size) / (m_max_angle - m_min_angle);
+		if (h1 > h2) {
+			// first index
+			double s = floor(slope * (h2 - m_min_angle) + 0.5);
+			double e = floor(slope * (h1 - m_min_angle) + 0.5);
+			for (int i = s; i < e; i++) {
+				newReading[i] = readings[i];
+			}
+		}
+
 	}
+
+	// atan2 to get heading
+	// find appropriate index in readings
+	// interpolate from start point to end point
+	// fill in in all ranges within
 
     if (m_marker_publisher.getNumSubscribers() > 0) {
         m_marker_publisher.publish(marker_points);
     }
 
+	delete readings;
+	return newReading;
 	// use these lines to change readings so only readings on extracted lines are included
 }

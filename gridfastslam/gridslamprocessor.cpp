@@ -442,7 +442,7 @@ void GridSlamProcessor::setMotionModelParameters
 
     #ifdef USE_FE_LINE_SEGMENT
       cerr << "Using FE_LINE_SEGMENT" << endl;
-      m_line_segment_extractor.extract_features(plainReading, m_beams);
+      plainReading = m_line_segment_extractor.extract_features(plainReading, m_beams);
     #endif
 
   if (m_count>0){
