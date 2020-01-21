@@ -27,6 +27,10 @@ public:
    std::vector<Line> run();
    double * laserScanCallback(double * plainreading,unsigned int m_beams);
 
+   void setMinAngle(double m);
+   void setMaxAngle(double m);
+   void setAngleRes(double m);
+
 private:
   // ROS
   //ros::NodeHandle nh_;
@@ -48,6 +52,9 @@ private:
    void cacheData();
   //void cacheData(const sensor_msgs::LaserScan::ConstPtr&);
   //void laserScanCallback(const sensor_msgs::LaserScan::ConstPtr&);
+  double m_min_angle;
+  double m_max_angle;
+  double m_angle_res;
 };
 
 } // namespace line_extraction

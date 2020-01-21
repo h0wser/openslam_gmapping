@@ -16,11 +16,11 @@ void FE_LineSegment::setupLineFeatures()
 	m_line_feature = line_feature::LineFeature();
 
 	// default params
-	m_line_feature.set_least_threshold(0.04);
-	m_line_feature.set_min_line_length(0.5);
-	m_line_feature.set_predict_distance(0.1);
-	m_line_feature.set_seed_line_points(6);
-	m_line_feature.set_min_line_points(12);
+	m_line_feature.set_least_threshold(0.2);
+	m_line_feature.set_min_line_length(0.4);
+	m_line_feature.set_predict_distance(0.2);
+	m_line_feature.set_seed_line_points(4);
+	m_line_feature.set_min_line_points(7);
 
 	m_line_feature.set_angle_increment(m_angle_res); // all in radians now
 	m_line_feature.set_angle_start(m_min_angle);
@@ -62,7 +62,7 @@ double * FE_LineSegment::extract_features(double* readings, unsigned int size) {
     marker_points.type = visualization_msgs::Marker::LINE_LIST;
     marker_points.action = visualization_msgs::Marker::ADD;
     marker_points.lifetime = ros::Duration();
-    marker_points.scale.x = 0.1;
+    marker_points.scale.x = 0.02;
 
 	marker_points.pose.orientation.w = 1;
 	marker_points.color.a = 1.0;

@@ -221,13 +221,49 @@ double * LineExtractionROS::laserScanCallback(double * plainreading,unsigned int
   line_extraction_.setRangeData(scan_ranges_doubles);
   std::vector<Line> lines=run();
   double * res=new double[m_beams];
+	for (double* r = res; r < res+m_beams; r++) {
+		*r = FP_NAN;
+	}
 
+	double slope = 1.0 * (m_beams) / (m_max_angle - m_min_angle);
   for(unsigned int i=0; i<lines.size();i++){    
-    res[i]= lines[i].getRadius();
+    double x1 = lines[i].getStart()[0];
+    double y1 = lines[i].getStart()[1];
+    double x2 = lines[i].getEnd()[0];
+    double y2 = lines[i].getEnd()[1];
+    double h1 = atan2(y1, x1);
+    double h2 = atan2(y2, x2);
+
+		if (h1 > h2) {
+			// first index
+			double s = floor(slope * (h2 - m_min_angle) + 0.5);
+			double e = floor(slope * (h1 - m_min_angle) + 0.5);
+			for (int i = s; i < e; i++) {
+				res[i] = plainreading[i];
+			}
+		}
   }
+
  // double * res= &lines.radius_;
+  delete plainreading;
   return res;
 }
+
+void LineExtractionROS::setMinAngle(double m)
+{
+  m_min_angle = m;
+}
+
+void LineExtractionROS::setMaxAngle(double m)
+{
+  m_max_angle = m;
+}
+
+void LineExtractionROS::setAngleRes(double m)
+{
+  m_angle_res = m;
+}
+
 
 } // namespace line_extraction
 
